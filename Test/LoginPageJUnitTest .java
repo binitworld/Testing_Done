@@ -16,12 +16,30 @@ public class LoginPageJUnitTest {
     }
 
     @Test
-    public void testLogin() {
+    public void testLoginSuccess() {
         driver.get("http://localhost:9000/login");
         driver.findElement(By.name("email")).sendKeys("agent@agilebank.com");
         driver.findElement(By.name("password")).sendKeys("binit123");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         assertTrue(driver.getCurrentUrl().contains("dashboard"));
+    }
+    @Test
+    public void testLoginForBinit() {
+        driver.get("http://localhost:9000/login");
+        driver.findElement(By.name("email")).sendKeys("binit@agilebank.com");
+        driver.findElement(By.name("password")).sendKeys("king123");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        assertFalse(driver.getCurrentUrl().contains("dashboard"));
+    }
+
+    
+    @Test
+    public void testLoginFailure() {
+        driver.get("http://localhost:9000/login");
+        driver.findElement(By.name("email")).sendKeys("invalid@agilebank.com");
+        driver.findElement(By.name("password")).sendKeys("invalidpassword");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        assertFalse(driver.getCurrentUrl().contains("dashboard"));
     }
 
     @After
